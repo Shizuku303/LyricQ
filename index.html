@@ -219,7 +219,7 @@
         
         <span class="tag">
             
-            <a href="/tags/welcome/" style="color: #ff7d73">welcome</a>
+            <a href="/tags/welcome/" style="color: #00bcd4">welcome</a>
         </span>
         
     </div>
@@ -244,215 +244,7 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="使用python"><a href="#使用python" class="headerlink" title="使用python"></a>使用python</h1><p>思路简单，后续会添加爬虫<br>考虑编写gui界面，方便使用<br>这个项目只是回顾一下学过的内容，之后会继续完善<br>&lt;–more–&gt;</p>
-<pre><code class="python">from time import *
-from sys import *
-from requests import *
-import os
-import tkinter as tk
-import tkinter.filedialog as fd
-
-original = &#123;
-    &quot;1.21.1&quot;: &quot;https://piston-data.mojang.com/v1/objects/59353fb40c36d304f2035d51e7d6e6baa98dc05c/server.jar&quot;,
-    &quot;1.21&quot;: &quot;https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d7c804ef0fe6369dd1ba/server.jar&quot;,
-    &quot;1.20.6&quot;: &quot;https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar&quot;,
-    &quot;1.20.5&quot;: &quot;https://piston-data.mojang.com/v1/objects/79493072f65e17243fd36a699c9a96b4381feb91/server.jar&quot;,
-    &quot;1.20.4&quot;: &quot;https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar&quot;,
-    &quot;1.20.3&quot;: &quot;https://piston-data.mojang.com/v1/objects/4fb536bfd4a83d61cdbaf684b8d311e66e7d4c49/server.jar&quot;,
-    &quot;1.20.2&quot;: &quot;https://piston-data.mojang.com/v1/objects/5b868151bd02b41319f54c8d4061b8cae84e665c/server.jar&quot;,
-    &quot;1.20.1&quot;: &quot;https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar&quot;,
-    &quot;1.20&quot;: &quot;https://piston-data.mojang.com/v1/objects/15c777e2cfe0556eef19aab534b186c0c6f277e1/server.jar&quot;,
-    &quot;1.19.4&quot;: &quot;https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar&quot;,
-    &quot;1.19.3&quot;: &quot;https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar&quot;,
-    &quot;1.19.2&quot;: &quot;https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar&quot;,
-    &quot;1.19.1&quot;: &quot;https://piston-data.mojang.com/v1/objects/8399e1211e95faa421c1507b322dbeae86d604df/server.jar&quot;
-&#125;
-
-
-
-def progressbar(url,path):
-    if not os.path.exists(path):   # 看是否有该文件夹，没有则创建文件夹
-         os.mkdir(path)
-    start = time() #下载开始时间
-    response = get(url, stream=True) #stream=True必须写上
-    size = 0    #初始化已下载大小
-    chunk_size = 1024  # 每次下载的数据大小
-    content_size = int(response.headers[&#39;content-length&#39;])  # 下载文件总大小
-    try:
-        if response.status_code == 200:   #判断是否响应成功
-            print(&#39;Start download,[File size]:&#123;size:.2f&#125; MB&#39;.format(size = content_size / chunk_size /1024))   #开始下载，显示下载文件大小
-            filepath = path+&#39;/server.jar&#39;  #设置图片name，注：必须加上扩展名
-            with open(filepath,&#39;wb&#39;) as file:   #显示进度条
-                for data in response.iter_content(chunk_size = chunk_size):
-                    file.write(data)
-                    size +=len(data)
-                    print(&#39;\r&#39;+&#39;[下载进度]:%s%.2f%%&#39; % (&#39;&gt;&#39;*int(size*50/ content_size), float(size / content_size * 100)) ,end=&#39; &#39;)
-        end = time()   #下载结束时间
-        print(&#39;Download completed!,times: %.2f秒&#39; % (end - start))  #输出下载用时时间
-    except:
-        print(&quot;\nDownload failed, please check your network or try again later.&quot;)
-
-def start():
-    sleep(1)
-    print(&quot;欢迎使用CX的服务器创建工具，本工具将帮助您创建并且运行一个本地的minecraft服务器。&quot;)
-    sleep(1)
-    print(&quot;本工具可以创建三种服务端，分别是原版、spigot、paper，不提供fabric和forge服务端的安装。&quot;)
-    sleep(1)
-    print(&quot;若您想要安装插件，请使用spigot或者paper；若您想开纯净服，首推spigot，其次原版。&quot;)
-    sleep(1)
-    print(&quot;***本工具使用到的网站分别有&#39;https://getbukkit.org/download/spigot&#39;、&#39;https://mcversions.net/&#39;、&#39;https://papermc.io/downloads/all&#39;***&quot;)
-    sleep(5)
-    ser = input(&quot;\n\n请输入您想使用的服务端(请务必输入数字，报错闪退了不怪我)[1]原版 [2]spigot [3]paper\n&quot;)
-    return ser
-
-def download_original():
-    a = input(&quot;请输入您要下载的服务器版本号:&quot;)
-    if a not in original:
-        print(&quot;输入的版本号不存在，请重新输入&quot;)
-        download_original()
-    else:
-        #下载服务端
-        print(&quot;请选择文件夹&quot;)
-        sleep(1)
-        url = original[a]
-        root = tk.Tk()
-        root.withdraw()
-        path = fd.askdirectory()
-        print(&quot;服务器将会下载到这里:&quot;+path,&quot;下载地址为:&quot; + url)
-        sleep(0.5)
-        if input(&quot;是否下载？[y/n]&quot;) == &quot;y&quot;:
-            progressbar(url,path)
-            print(&quot;服务端下载完成&quot;)
-        else:
-            print(&quot;下载取消&quot;)
-            exit()
-
-def download_spigot():
-    #https://download.getbukkit.org/spigot/spigot-1.20.6.jar  https://cdn.getbukkit.org/spigot/spigot-1.15.jar  https://cdn.getbukkit.org/spigot/spigot-1.8.7-R0.1-SNAPSHOT-latest.jar
-    a = input(&quot;请输入您要下载的服务器版本号:&quot;)
-    url = &quot;https://download.getbukkit.org/spigot/spigot-&quot;+a+&quot;.jar&quot;
-    url1 = &quot;https://cdn.getbukkit.org/spigot/spigot-&quot;+a+&quot;.jar&quot;
-    url2 = &quot;https://cdn.getbukkit.org/spigot/spigot-&quot;+a+&quot;-R0.1-SNAPSHOT-latest.jar&quot;  #经测试无法正常下载，所以老版本的无法下载
-    print(&quot;正在检查版本号是否正确...&quot;)
-    if get(url,stream=True).status_code == 200:
-        #下载服务端
-        print(&quot;请选择文件夹&quot;)
-        sleep(1)
-        root = tk.Tk()
-        root.withdraw()
-        path = fd.askdirectory()
-        print(&quot;服务器将会下载到这里:&quot;+path,&quot;下载地址为:&quot; + url)
-        sleep(0.5)
-        if input(&quot;是否下载？[y/n](请注意，spigot下载速度较慢，请耐心等待)&quot;) == &quot;y&quot;:
-            progressbar(url,path)
-            print(&quot;服务端下载完成&quot;)
-        else:
-            print(&quot;下载取消&quot;)
-            exit()
-    elif get(url1,stream=True).status_code == 200:
-        #下载服务端
-        print(&quot;请选择文件夹&quot;)
-        sleep(1)
-        root = tk.Tk()
-        root.withdraw()
-        path = fd.askdirectory()
-        print(&quot;服务器将会下载到这里:&quot;+path,&quot;下载地址为:&quot; + url1)
-        sleep(0.5)
-        if input(&quot;是否下载？[y/n](请注意，spigot下载速度较慢，请耐心等待)&quot;) == &quot;y&quot;:
-            progressbar(url1,path)
-            print(&quot;服务端下载完成&quot;)
-        else:
-            print(&quot;下载取消&quot;)
-            exit()
-    elif get(url2,stream=True).status_code == 200:
-        #下载服务端
-        print(&quot;请选择文件夹&quot;)
-        sleep(1)
-        root = tk.Tk()
-        root.withdraw()
-        path = fd.askdirectory()
-        print(&quot;服务器将会下载到这里:&quot;+path,&quot;下载地址为:&quot; + url2)
-        sleep(0.5)
-        if input(&quot;是否下载？[y/n](请注意，spigot下载速度较慢，请耐心等待)&quot;) == &quot;y&quot;:
-            progressbar(url2,path)
-            print(&quot;服务端下载完成&quot;)
-        else:
-            print(&quot;下载取消&quot;)
-            exit()
-    else:
-        print(&quot;输入的版本号不存在，请重新输入&quot;)
-        download_spigot()
-    
-
-def download_paper():
-    pass
-
-def run_server():
-    print(&quot;请选择服务端所在的文件夹&quot;)
-    sleep(1)
-    root = tk.Tk()
-    root.withdraw()
-    path = fd.askdirectory()
-    print(&quot;服务端将会初始化并运行这里:&quot;+path)
-    sleep(0.5)
-    if input(&quot;是否初始化并运行？[y/n]&quot;) == &quot;y&quot;:
-        os.chdir(path)
-        server = path + &quot;/server.jar&quot;
-        eula = path + &quot;/eula.txt&quot;
-        if not os.path.exists(server):
-            print(&quot;服务端不存在，请检查路径是否正确&quot;)
-            exit()
-        with open(eula, &quot;w&quot;) as f:
-                f.write(&quot;eula=true&quot;)
-                f.close()
-        with open(path + &quot;/start.bat&quot;, &quot;w&quot;) as f:
-                mx = input(&quot;请输入服务器占用的最大内存(MB)(不输入则默认为2048):&quot;)
-                ms = input(&quot;请输入服务器占用的最小内存(MB)(不输入则默认为1024):&quot;)
-                if mx == &quot;&quot;:
-                    mx = &quot;2048&quot;
-                if ms == &quot;&quot;:
-                    ms = &quot;1024&quot;
-                f.write(&quot;java -Xmx&quot;+mx+&quot;M -Xms&quot;+ms+&quot;M -jar server.jar nogui&quot;)
-                f.close()
-        with open(path + &quot;/帮助文档.txt&quot;, &quot;w&quot;) as f:
-                f.write(&quot;0.大部分服务器闪退的原因是Java运行环境配置错误或者版本错误，请按照https://www.bilibili.com/read/cv35088159/这篇文章选择正确的JAVA版本以及https://blog.51cto.com/u_16099326/7413641 这篇文章配置Java运行环境。\n1. 请将服务端放置在您想运行的位置\n2. 双击start.bat文件，即可运行服务端\n3. 若服务端启动失败，请检查是否有文件丢失或路径错误&quot;)
-                f.close()
-        os.system(&quot;start &quot; + path + &quot;/start.bat&quot;)
-        print(&quot;服务端初始化并运行完成&quot;)
-        print(&quot;*若服务端启动失败，查看帮助文档*&quot;)
-        
-    else:
-        print(&quot;运行取消&quot;)
-        exit()
-
-
-def main():
-    ser = start()  #获取用户输入的服务端
-
-    if ser == &quot;1&quot;:  #原版服务端
-        print(&quot;您选择了原版服务端&quot;)
-        download_original()
-        sleep(1)
-        print(&quot;开始运行服务端&quot;)
-        run_server()
-    elif ser == &quot;2&quot;:  #spigot服务端
-        print(&quot;您选择了spigot服务端&quot;)
-        download_spigot()
-        sleep(1)
-        print(&quot;开始运行服务端&quot;)
-        run_server()
-    elif ser == &quot;3&quot;:  #paper服务端
-        pass
-    else:
-        print(&quot;你真不听话&quot;)  #遇到傻逼了
-        
-
-if __name__ == &#39;__main__&#39;:
-    main()
-    
-    
-</code></pre>
-
+            <h1 id="使用python"><a href="#使用python" class="headerlink" title="使用python"></a>使用python</h1><p>思路简单，后续会添加爬虫<br>考虑编写gui界面，方便使用<br>这个项目只是回顾一下学过的内容，之后会继续完善</p>
             
         </div>
     </div>
@@ -466,7 +258,7 @@ if __name__ == &#39;__main__&#39;:
         
         <span class="tag">
             
-            <a href="/tags/python/" style="color: #00bcd4">python</a>
+            <a href="/tags/python/" style="color: #ff7d73">python</a>
         </span>
         
     </div>
