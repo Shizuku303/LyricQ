@@ -35,6 +35,11 @@
 <script src="/js/lib/highlight.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
 
 <script src="/js/lib/preview.js"></script>
 
@@ -171,7 +176,13 @@
     
     <div class="content" v-pre>
         <blockquote>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis<br>feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+<p>这是一段文本</p>
+</blockquote>
+<blockquote>
+<p>这也是一段</p>
+</blockquote>
+<blockquote>
+<p>还有一段<br>连上了上一段</p>
 </blockquote>
 <pre><code class="python">print(&quot;Hello, world!&quot;)
 </code></pre>
@@ -181,7 +192,7 @@
 
 <hr>
 <blockquote>
-<p>兄弟你好香</p>
+<p>你好香</p>
 </blockquote>
 <hr>
 <table>
@@ -211,6 +222,31 @@
 <p><code>这是一处高亮</code></p>
 <h1 id="超大的高亮"><a href="#超大的高亮" class="headerlink" title="超大的高亮"></a><code>超大的高亮</code></h1><pre><code class="python">print(&quot;Hello, world!&quot;)
 </code></pre>
+<p>你<code>好</code></p>
+<p>使用 <code>Ctrl</code> + <code>Alt</code> + <code>Del</code> 重启电脑</p>
+
+
+$$
+\begin{bmatrix}
+  a & b \\
+  c & d
+\end{bmatrix}
+$$
+
+$$
+\begin{CD}
+  A @>a>> B \\
+@VbVV @AAcA \\
+  C @= D
+\end{CD}
+$$
+
+
+
+<blockquote>
+<p>这很重要</p>
+</blockquote>
+<hr>
 
     </div>
     
@@ -261,6 +297,9 @@
     id="fireworks"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
 ></canvas>
+
+<script src="/live2d-widget/autoload.js"></script>
+
 <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="/js/fireworks.min.js"></script>
 <div id="cursor"></div>

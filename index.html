@@ -35,6 +35,11 @@
 <script src="/js/lib/highlight.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
 
 <script src="/js/lib/preview.js"></script>
 
@@ -219,7 +224,7 @@
         
         <span class="tag">
             
-            <a href="/tags/welcome/" style="color: #00bcd4">welcome</a>
+            <a href="/tags/welcome/" style="color: #ffa2c4">welcome</a>
         </span>
         
     </div>
@@ -258,7 +263,7 @@
         
         <span class="tag">
             
-            <a href="/tags/python/" style="color: #ff7d73">python</a>
+            <a href="/tags/python/" style="color: #00a596">python</a>
         </span>
         
     </div>
@@ -284,7 +289,13 @@
         <div class="content" v-pre>
             
             <blockquote>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis<br>feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+<p>这是一段文本</p>
+</blockquote>
+<blockquote>
+<p>这也是一段</p>
+</blockquote>
+<blockquote>
+<p>还有一段<br>连上了上一段</p>
 </blockquote>
 <pre><code class="python">print(&quot;Hello, world!&quot;)
 </code></pre>
@@ -430,6 +441,9 @@
     id="fireworks"
     style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
 ></canvas>
+
+<script src="/live2d-widget/autoload.js"></script>
+
 <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="/js/fireworks.min.js"></script>
 <div id="cursor"></div>
