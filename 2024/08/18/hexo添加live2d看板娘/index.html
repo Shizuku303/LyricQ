@@ -60,7 +60,6 @@
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
                     <h2>LOADING</h2>
-                    <p>本次加载将会下载大约150MB资源哦</p>
                     <p>加载过慢请开启缓存 浏览器默认开启</p>
                     <img src="/images/loading.gif" />
                 </div>
@@ -181,14 +180,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/hexo/" style="color: #00bcd4">
+                <a href="/tags/hexo/" style="color: #00a596">
                     hexo
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/live2d/" style="color: #03a9f4">
+                <a href="/tags/live2d/" style="color: #00bcd4">
                     live2d
                 </a>
             </span>
@@ -204,7 +203,37 @@
 <blockquote>
 <p>本文参考仓库 <a target="_blank" rel="noopener" href="https://github.com/stevenjoezhang/live2d-widget">https://github.com/stevenjoezhang/live2d-widget</a></p>
 </blockquote>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>你的博客</li>
+<li>一个github加速工具，比如说<a target="_blank" rel="noopener" href="https://steampp.net/">steam++</a></li>
+<li>一个好用的文本编辑器</li>
+</ul>
+<blockquote>
+<p>注意，在下面操作中全程都需要打开加速器哦！</p>
+</blockquote>
+<h3 id="用本地数据部署"><a href="#用本地数据部署" class="headerlink" title="用本地数据部署"></a>用本地数据部署</h3><h4 id="下载所需文件"><a href="#下载所需文件" class="headerlink" title="下载所需文件"></a>下载所需文件</h4><p>首先，下载<a target="_blank" rel="noopener" href="https://github.com/fghrsh/live2d_api/archive/refs/tags/1.0.1.zip">这个压缩包</a>和<a target="_blank" rel="noopener" href="https://github.com/stevenjoezhang/live2d-widget/archive/refs/tags/v0.9.0.zip">这个压缩包</a>，把压缩包内的<code>live2d_api-1.0.1</code>文件夹和<code>live2d-widget-0.9.0</code>文件夹放到<code>你的博客\themes\你的主题\source</code>内，然后分别把这两个文件夹的版本后缀删除，如图：</p>
+<p><img src="/%5Cimages%5Cposts%5Cimage-20240818223021992.png" alt="image-20240818223021992"></p>
+<h4 id="把live2d部署至网页"><a href="#把live2d部署至网页" class="headerlink" title="把live2d部署至网页"></a>把live2d部署至网页</h4><p>打开<code>live2d-widget</code>文件夹里的<code>autoload.js</code>,把第三行开头的<code>//</code>删除，给第二行开头加上<code>//</code>，就像这样：<img src="/%5Cimages%5Cposts%5Cimage-20240818224447102.png" alt="image-20240818224447102"></p>
+<p>然后找到第38行的cdnPath，把冒号后面改成<code>"/live2d_api/",</code>，逗号千万不要忘记！！！改完后保存文件。</p>
+<p>打开主题文件夹下的<code>layout\layout.ejs</code>,把下面一行代码添加至<code>body</code>里面：</p>
+<pre><code class="html">&lt;script src=&quot;/live2d-widget/autoload.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>随后运行<code>hexo g</code>与<code>hexo s</code>打开网页即可看见左下角有一个黄色双马尾（</p>
+<hr>
+<h3 id="用云端数据部署"><a href="#用云端数据部署" class="headerlink" title="用云端数据部署"></a>用云端数据部署</h3><p>这个其实十分简单，你只需要将下面一行代码添加进<code>layout\layout.ejs</code>里面就ok了</p>
+<pre><code class="html">&lt;script src=&quot;https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>效果其实差不多，至于我为什么不先说，是因为这样子如果不开加速器的话live2d很可能加载不出来。</p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>如果你部署在本地，你会发现加载非常快，但是一旦你上传到云端服务器，再进入你的博客(不是本地的localhost:4000)，需要先加载150mb的资源，再进入网页。150mb听起来挺小，但对于一个小小的博客还是挺大了。</p>
+<p>这150mb资源很大部分来自于<code>live2d-api</code>文件夹。为了解决这个问题，让我们深入探究一下吧ヾ(≧▽≦*)o</p>
+<h3 id="CDN！原来是泥搞的鬼"><a href="#CDN！原来是泥搞的鬼" class="headerlink" title="CDN！原来是泥搞的鬼"></a>CDN！原来是泥搞的鬼</h3><h4 id="什么是CDN？"><a href="#什么是CDN？" class="headerlink" title="什么是CDN？"></a>什么是CDN？</h4><p>CDN全称Content Delivery Network，即内容分发网络。它是一种通过在多个地点部署服务器，将内容分发到用户的网络上的技术。它可以帮助网站加速访问，提高用户访问速度。</p>
+<h4 id="哪里用到了CDN？"><a href="#哪里用到了CDN？" class="headerlink" title="哪里用到了CDN？"></a>哪里用到了CDN？</h4><h6 id="原来在autoload-js里呀！"><a href="#原来在autoload-js里呀！" class="headerlink" title="原来在autoload.js里呀！"></a>原来在autoload.js里呀！</h6><p>其实你在autoload.js里修改cdnPath时就能发现cndPath原本是一串链接</p>
+<pre><code class="js">cdnPath: &quot;https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/&quot;,
+</code></pre>
+<p>这段链接提供了一个<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1779335">cnd</a>，帮助程序去访问<code>live2d_api</code>里的东西，但不需要把这个文件夹下载到本地。看起来这样做挺好的，不会占用博客的内存，但其实这个链接指向的就是<a target="_blank" rel="noopener" href="https://github.com/fghrsh/live2d_api/">这个github仓库</a>的东西，所以需要用户使用加速器才能访问，要不然你会发现live2d加载不出来。加速器可不是人人都有吧？</p>
+<h5 id="舍弃加载速度换来live2d的流畅运行，还是舍弃用户体验换来live2d的流畅运行？"><a href="#舍弃加载速度换来live2d的流畅运行，还是舍弃用户体验换来live2d的流畅运行？" class="headerlink" title="舍弃加载速度换来live2d的流畅运行，还是舍弃用户体验换来live2d的流畅运行？"></a>舍弃加载速度换来live2d的流畅运行，还是舍弃用户体验换来live2d的流畅运行？</h5><p>其实有一个方法能在保证加载速度快的同时又保证用户体验以及live2d的流畅运行，那就是使用国内服务器<code>自建CDN</code>。我们不使用国外的免费cdn，而是使用自己的国内cdn。听起来是不是很不错？你可以看看<a target="_blank" rel="noopener" href="https://blog.csdn.net/skyhhjmk/article/details/133579016">这个教程</a>来搭建。</p>
+
     </div>
     
     
