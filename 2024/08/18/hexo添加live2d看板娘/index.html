@@ -187,7 +187,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/live2d/" style="color: #00bcd4">
+                <a href="/tags/live2d/" style="color: #ff7d73">
                     live2d
                 </a>
             </span>
@@ -212,8 +212,8 @@
 <p>注意，在下面操作中全程都需要打开加速器哦！</p>
 </blockquote>
 <h3 id="用本地数据部署"><a href="#用本地数据部署" class="headerlink" title="用本地数据部署"></a>用本地数据部署</h3><h4 id="下载所需文件"><a href="#下载所需文件" class="headerlink" title="下载所需文件"></a>下载所需文件</h4><p>首先，下载<a target="_blank" rel="noopener" href="https://github.com/fghrsh/live2d_api/archive/refs/tags/1.0.1.zip">这个压缩包</a>和<a target="_blank" rel="noopener" href="https://github.com/stevenjoezhang/live2d-widget/archive/refs/tags/v0.9.0.zip">这个压缩包</a>，把压缩包内的<code>live2d_api-1.0.1</code>文件夹和<code>live2d-widget-0.9.0</code>文件夹放到<code>你的博客\themes\你的主题\source</code>内，然后分别把这两个文件夹的版本后缀删除，如图：</p>
-<p><img src="/%5Cimages%5Cposts%5Cimage-20240818223021992.png" alt="image-20240818223021992"></p>
-<h4 id="把live2d部署至网页"><a href="#把live2d部署至网页" class="headerlink" title="把live2d部署至网页"></a>把live2d部署至网页</h4><p>打开<code>live2d-widget</code>文件夹里的<code>autoload.js</code>,把第三行开头的<code>//</code>删除，给第二行开头加上<code>//</code>，就像这样：<img src="/%5Cimages%5Cposts%5Cimage-20240818224447102.png" alt="image-20240818224447102"></p>
+<p><img src="/images/posts/image-20240818223021992.png" alt="image-20240818223021992"></p>
+<h4 id="把live2d部署至网页"><a href="#把live2d部署至网页" class="headerlink" title="把live2d部署至网页"></a>把live2d部署至网页</h4><p>打开<code>live2d-widget</code>文件夹里的<code>autoload.js</code>,把第三行开头的<code>//</code>删除，给第二行开头加上<code>//</code>，就像这样：<img src="/images/posts/image-20240818224447102.png" alt="image-20240818224447102"></p>
 <p>然后找到第38行的cdnPath，把冒号后面改成<code>"/live2d_api/",</code>，逗号千万不要忘记！！！改完后保存文件。</p>
 <p>打开主题文件夹下的<code>layout\layout.ejs</code>,把下面一行代码添加至<code>body</code>里面：</p>
 <pre><code class="html">&lt;script src=&quot;/live2d-widget/autoload.js&quot;&gt;&lt;/script&gt;
